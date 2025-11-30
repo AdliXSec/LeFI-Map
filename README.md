@@ -192,4 +192,4 @@ Dirilis dengan lisensi **MIT License**.
 
 ## 💬 Kontak
 
-Tambahkan sosial media, email, atau website Anda di sini.
+Linkedin: https://www.linkedin.com/in/naufal-syahruradli-a23504343/
