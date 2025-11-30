@@ -115,7 +115,7 @@ def test_payload(session, target_url, payload, timeout, method, post_data_templa
                         if capture == "all":
                             vulnerable_line_4 = f"    {responses()}\n{indented_response}\n"
                         else:
-                            vulnerable_line_4 = f"    {responses()}\n{indented_response[:capture]}\n{f"    {truncated()}" if len(indented_response) > capture else ""}\n"
+                            vulnerable_line_4 = f'    {responses()}\n{indented_response[:capture]}\n{f"    {truncated()}" if len(indented_response) > capture else ""}\n'
                         print(vulnerable_line_4)
                 else:
                     print(f"{vulnerable_line_1} \n{vulnerable_line_2}")
@@ -137,7 +137,7 @@ def test_payload(session, target_url, payload, timeout, method, post_data_templa
                         if capture == "all":
                             vulnerable_line_4 = f"    {responses()}\n{indented_response}\n"
                         else:
-                            vulnerable_line_4 = f"    {responses()}\n{indented_response[:capture]}\n{f"    {truncated()}" if len(indented_response) > capture else ""}\n"
+                            vulnerable_line_4 = f'    {responses()}\n{indented_response[:capture]}\n{f"    {truncated()}" if len(indented_response) > capture else ""}\n'
                         write_to_output(vulnerable_line_4)
                 else:
                     write_to_output(f"{vulnerable_line_1} \n{vulnerable_line_2}")
@@ -164,7 +164,7 @@ def test_payload(session, target_url, payload, timeout, method, post_data_templa
                         if capture == "all":
                             vulnerable_line_4 = f"    {responses()}\n{indented_response}\n"
                         else:
-                            vulnerable_line_4 = f"    {responses()}\n{indented_response[:capture]}\n{f"    {truncated()}" if len(indented_response) > capture else ""}\n"
+                            vulnerable_line_4 = f'    {responses()}\n{indented_response[:capture]}\n{f"    {truncated()}" if len(indented_response) > capture else ""}\n'
                         print(vulnerable_line_4)
                 else:
                     print(f"{vulnerable_line_1} \n{vulnerable_line_2}")
@@ -186,7 +186,7 @@ def test_payload(session, target_url, payload, timeout, method, post_data_templa
                         if capture == "all":
                             vulnerable_line_4 = f"    {responses()}\n{indented_response}\n"
                         else:
-                            vulnerable_line_4 = f"    {responses()}\n{indented_response[:capture]}\n{f"    {truncated()}" if len(indented_response) > capture else ""}\n"
+                            vulnerable_line_4 = f'    {responses()}\n{indented_response[:capture]}\n{f"    {truncated()}" if len(indented_response) > capture else ""}\n'
                         write_to_output(vulnerable_line_4)
                 else:
                     write_to_output(f"{vulnerable_line_1} \n{vulnerable_line_2}")

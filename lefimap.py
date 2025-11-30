@@ -80,8 +80,8 @@ def main():
             
     print(f"{info()} Target URL : {host}")
     print(f"{info()} Metode : {args.method}")
-    print(f"{info()} Verbose Mode : {"OFF" if args.silent else "ON"}")
-    print(f"{info()} Benchmark Mode : {"ON" if args.benchmark else "OFF"}")
+    print(f"{info()} Verbose Mode : {'OFF' if args.silent else 'ON'}")
+    print(f"{info()} Benchmark Mode : {'ON' if args.benchmark else 'OFF'}")
     print(f"{info()} Level : {args.level}")
     
     if args.level == "HARD":

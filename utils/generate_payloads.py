@@ -2,7 +2,7 @@ from utils.banner import warning, info
 
 def read_payloads(wordlist_path):
     try:
-        with open(wordlist_path, 'r') as f:
+        with open(wordlist_path, 'r', encoding="utf-8", errors="ignore") as f:
             payloads = [line.strip() for line in f.readlines()]
             print(f"{info()} Berhasil memuat {len(payloads)} payload dari {wordlist_path}")
             return payloads
