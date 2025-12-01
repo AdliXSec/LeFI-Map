@@ -93,6 +93,8 @@ _config.php
 ../_config.php
 ../config.php
 config.php
+/etc/shadow
+/var/logs
 ../_config.php%00
 ../../../../../../../../conf/server.xml
 /core/config.php
