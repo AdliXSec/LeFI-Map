@@ -9,10 +9,12 @@ from utils.user_agents import get_random_agent
 START_MARKER = "L_E_E_X_Y"
 END_MARKER = "D_L_I_X"
 
-def start_os_shell(session, url, method, post_data_template, proxies, filter_name, timeout, payloads, random_agent, custom_agent_list):
+def start_os_shell(session, url, method, post_data_template, proxies, filter_name, timeout, payloads, random_agent, custom_agent_list, custom_headers=None):
     print(f"{info()} Mencoba memulai OS Shell... Gunakan 'exit' atau 'quit' untuk keluar.\n")
     
     # session.headers.update({'User-Agent': 'LeFiMap-Shell'})
+    if custom_headers:
+        session.headers.update(custom_headers)
         
     local_headers = {}
     if proxies:

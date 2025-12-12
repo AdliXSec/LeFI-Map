@@ -3,7 +3,7 @@ from utils.args_parser import parse_args
 from controller.scanner import run_scan
 from controller.identifier import run_identifier
 from controller.shell import start_os_shell
-from utils.output_handler import setup_output_file
+from utils.output_handler import setup_output_file, write_json_output
 from urllib.parse import urlparse
 from utils.encoder import FILTER_MAP
 from utils.user_agents import load_agents_from_file
@@ -112,6 +112,17 @@ def main():
         setup_output_file(host, args.output)
         print(f"{info()} Hasil akan disimpan di: output/{args.output}")
         
+    headers = {}
+    if args.header:
+        print(f"{info()} Menggunakan header kustom...")
+        for header in args.header:
+            if ':' in header:
+                key, value = header.split(':', 1)
+                headers[key.strip()] = value.strip()
+                print(f"  - {key.strip()}: {value.strip()}")
+            else:
+                print(f"{warning()} Format header tidak valid: '{header}'. Dilewati.")
+    
     time.sleep(2)
     
     if args.os_shell is not None:
@@ -145,7 +156,8 @@ def main():
             timeout=args.timeout,
             payloads=args.os_shell,
             random_agent=use_random_agent,
-            custom_agent_list=custom_agent_list
+            custom_agent_list=custom_agent_list,
+            custom_headers=headers
         )
         return    
     
@@ -160,6 +172,7 @@ def main():
         level=args.level,
         filter_name=filter_names,
         session_cookie=args.session,
+        custom_headers=headers,
         random_agent=use_random_agent,
         custom_agent_list=custom_agent_list,
         replace_rule=args.replace,
@@ -175,6 +188,9 @@ def main():
     )
     
     print(f"\n{info()} Scanning selesai.")
+
+    if args.json:
+        write_json_output(args.json)
 
 if __name__ == "__main__":
     main()

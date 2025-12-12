@@ -39,5 +39,13 @@ def build_wrapper_payload(wrapper_type, args):
     if wrapper_type == 'phar':
         if len(args) != 2: return None
         return f"phar://{args[0]}/{args[1]}"
+
+    if wrapper_type == 'expect':
+        if len(args) != 1: return None
+        return f"expect://{args[0]}"
+
+    if wrapper_type == 'input':
+        # php://input doesn't take arguments in the path
+        return "php://input"
     
     return None

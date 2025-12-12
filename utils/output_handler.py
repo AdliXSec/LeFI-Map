@@ -36,3 +36,24 @@ def write_benchmark_report(target, payload, duration):
     
     write_to_output(report_lines)
     write_to_output("")
+
+# JSON Output Handling
+import json
+
+JSON_RESULTS = []
+
+def add_vuln_to_json(data):
+    JSON_RESULTS.append(data)
+
+def write_json_output(filename):
+    if not filename:
+        return
+    
+    if not os.path.exists('output'):
+        os.makedirs('output')
+        
+    filepath = os.path.join('output', filename)
+    
+    print(f"\n{info()} Menyimpan hasil JSON ke: {filepath}")
+    with open(filepath, 'w') as f:
+        json.dump(JSON_RESULTS, f, indent=4)

@@ -2,7 +2,7 @@ import requests, time, textwrap, base64, binascii, re
 from urllib.parse import urlparse, parse_qs, urlencode
 import concurrent.futures
 import threading
-from utils.output_handler import write_to_output, write_benchmark_report
+from utils.output_handler import write_to_output, write_benchmark_report, add_vuln_to_json
 from utils.patterns import NEGATIVE_PATTERNS, POSITIVE_PATTERNS, HARD_POSITIVE_PATTERNS
 from utils.encoder import apply_filters, apply_custom_replace
 from utils.user_agents import get_random_agent
@@ -87,6 +87,9 @@ def test_payload(session, target_url, payload, timeout, method, post_data_templa
     
     try:
         response = None
+        final_url = None
+        injected_data_str = None
+
         if method == "GET":
             final_url = target_url.replace("FUZZ", payload)
             response = session.get(final_url, timeout=timeout, headers=local_headers)
@@ -100,13 +103,24 @@ def test_payload(session, target_url, payload, timeout, method, post_data_templa
             
             vulnerable_line_1 = f"{success()} {vuln()} Payload ditemukan: {payload}"
             if method == "GET":
-                vulnerable_line_2 = f"    URL: {target_url.replace('FUZZ', payload)}"
+                vulnerable_line_2 = f"    URL: {final_url}"
             else:
-                vulnerable_line_2 = f"    Data: {post_data_template.replace('FUZZ', payload)}"
+                vulnerable_line_2 = f"    Data: {injected_data_str}"
             vulnerable_line_3 = f"    {warning()} Ditemukan pola file '{payload.replace('../', '')}' dalam respons."
             indented_response = textwrap.indent(response.text.strip(), "    ")
+            
+            # Persiapkan data untuk JSON
+            vuln_data = {
+                "type": "LFI",
+                "payload": payload,
+                "method": method,
+                "location": final_url if method == "GET" else injected_data_str,
+                "response_snippet": response.text[:200]
+            }
+
             # Tampilkan di layar
             with print_lock:
+                add_vuln_to_json(vuln_data)
                 if not silent_mode:
                     print(f"\n{vulnerable_line_1}")
                     print(vulnerable_line_2)
@@ -151,11 +165,22 @@ def test_payload(session, target_url, payload, timeout, method, post_data_templa
             vulnerable_line_2 = f"    {warning()} Input dicerminkan di dalam respons HTML/JS."
             vulnerable_line_3 = f"    {warning()} Ini bisa mengindikasikan DOM LFI atau Reflected XSS."
             if method == "GET":
-                vulnerable_line_3 += f"\n    URL: {target_url.replace('FUZZ', payload)}"
+                vulnerable_line_3 += f"\n    URL: {final_url}"
             else:
-                vulnerable_line_3 += f"\n    Data: {post_data_template.replace('FUZZ', payload)}"
+                vulnerable_line_3 += f"\n    Data: {injected_data_str}"
             indented_response = textwrap.indent(response.text.strip(), "    ")
+
+            # Persiapkan data untuk JSON
+            vuln_data = {
+                "type": "DOM-based LFI/XSS",
+                "payload": payload,
+                "method": method,
+                "location": final_url if method == "GET" else injected_data_str,
+                "response_snippet": response.text[:200]
+            }
+
             with print_lock:
+                add_vuln_to_json(vuln_data)
                 if not silent_mode:
                     print(f"\n{vulnerable_line_1}")
                     print(vulnerable_line_2)
@@ -263,7 +288,7 @@ def execute_tests(session, target_url, payloads, timeout, method, post_data, ben
     if count == 0:
         print(f"\n{danger()} Not Vulnerable")
 
-def run_scan(target_url, wordlist_path, timeout, method, post_data, benchmark_mode, silent_mode, level, filter_name, session_cookie, random_agent, custom_agent_list, replace_rule, threads, limit_params, success_key, failed_key, filename, proxies, capture, wrapper, dom_scan_enabled):
+def run_scan(target_url, wordlist_path, timeout, method, post_data, benchmark_mode, silent_mode, level, filter_name, session_cookie, random_agent, custom_agent_list, replace_rule, threads, limit_params, success_key, failed_key, filename, proxies, capture, wrapper, dom_scan_enabled, custom_headers=None):
     if wrapper:
         payloads = wrapper
         # print(payloads)
@@ -306,6 +331,9 @@ def run_scan(target_url, wordlist_path, timeout, method, post_data, benchmark_mo
         except Exception as e:
             print(f"{warning()} Format cookie salah atau gagal diproses: {e}")
             return
+
+    if custom_headers:
+        session.headers.update(custom_headers)
 
     fuzz_in_url = "FUZZ" in target_url
     fuzz_in_data = post_data and "FUZZ" in post_data

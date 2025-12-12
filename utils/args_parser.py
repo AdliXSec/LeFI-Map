@@ -28,6 +28,7 @@ def parse_args():
     request_group.add_argument("-m", "--method", type=str.upper, default="GET", choices=["GET", "POST"], help="Metode HTTP (default: GET).")
     request_group.add_argument("-d", "--data", help="Data untuk metode POST (e.g., 'id=FUZZ').")
     request_group.add_argument("-s", "--session", help="Cookie sesi untuk autentikasi (e.g., 'PHPSESSID=...').")
+    request_group.add_argument("--header", help="Header kustom untuk request (dapat digunakan berkali-kali)", action="append")
     request_group.add_argument("-t", "--timeout", type=int, default=10, help="Timeout untuk request (detik, default: 10).")
 
     
@@ -51,7 +52,7 @@ def parse_args():
 
 
     wrapper_group = parser.add_argument_group('Wrapper', 'Opsi untuk menggunakan payload PHP Wrapper')
-    wrapper_group.add_argument("--wrapper", choices=['php_filter', 'file', 'zip', 'phar'], help="Gunakan payload wrapper spesifik. Membutuhkan argumen tambahan.")
+    wrapper_group.add_argument("--wrapper", choices=['php_filter', 'file', 'zip', 'phar', 'expect', 'input'], help="Gunakan payload wrapper spesifik. Membutuhkan argumen tambahan.")
     wrapper_group.add_argument("--wrapper-args", nargs='+', metavar='ARG', help="Argumen untuk wrapper. Contoh untuk php_filter: index.php. Untuk zip: /path/ke/file.zip shell.php")
     
     
@@ -66,6 +67,7 @@ def parse_args():
     
     output_group = parser.add_argument_group('Output', 'Opsi untuk mengontrol tampilan output')
     output_group.add_argument("-o", "--output", help="Simpan hasil scan ke dalam file di folder 'output/'.")
+    output_group.add_argument("--json", help="Simpan hasil dalam format JSON ke file yang ditentukan.")
     output_group.add_argument("--silent", action="store_true", help="Aktifkan silent mode untuk output minimal.")
     output_group.add_argument("--benchmark", action="store_true", help="Tampilkan benchmark waktu untuk temuan.")
     output_group.add_argument("--capture", nargs='?', const=500, default=None, type=capture_type, metavar='CHARS_OR_ALL', help="Tampilkan respons. Opsional: jumlah karakter atau 'all' (default: 500).")

